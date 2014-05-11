@@ -1,0 +1,13 @@
+power<-read.table("household_power_consumption.txt", header=TRUE, sep=";",na.strings="?")
+subpower <- power[power$Date %in% c("1/2/2007","2/2/2007"),]
+datetime<-strptime(paste(subpower[,1],subpower[,2]),format = "%d/%m/%Y %H:%M:%S")
+png(file = "plot4.png")
+par(mfrow=c(2,2))
+plot(datetime,subpower[,3],type="l",xlab="",ylab="Global Active Power")
+plot(datetime,subpower$Voltage, type="l", ylab="Voltage")
+plot(datetime,subpower[,7],type="l",xlab="",ylab="Energy sub metering")
+points(datetime,subpower[,8],type="l",col="red")
+points(datetime,subpower[,9],type="l",col="blue")
+legend("topright",lty=1, col=c("black","red","blue"), bty="n",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+plot(datetime,subpower[,4],type="l",ylab="Global_reactive_power",)
+dev.off()
